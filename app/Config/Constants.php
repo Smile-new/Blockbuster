@@ -122,6 +122,7 @@ define("TAREA_VIDEOS", "videos");
 define("TAREA_PAGOS", "pagos");
 define("TAREA_USUARIOS_PLANES", "usuarios_planes");
 define("TAREA_ALQUILERES", "alquileres");
+define('TAREA_CLIENTES', 'tarea_clientes');
 
 
 // Permisos para el Administrador
@@ -139,7 +140,7 @@ define('PERMISOS_ADMINISTRADOR', array(
 
 define('PERMISOS_OPERADOR', array(
     TAREA_DASHBOARD,
-    TAREA_USUARIOS,       
+    TAREA_CLIENTES,       
     TAREA_PAGOS           
 ));
 
@@ -150,6 +151,7 @@ define('PERMISOS_CLIENTE', array(
     TAREA_PAGOS,         
     TAREA_VIDEOS          
 ));
+
 
 define('ROL_ADMINISTRADOR', array("clave" => 745 , "rol" => "Administrador"));
 define('ROL_OPERADOR', array("clave" => 125 , "rol" => "Operador"));
@@ -167,3 +169,4 @@ define("ROLES", array(
 define('RECURSOS_PANEL_BSB_JS', 'recursos_panel_bsb\js');
 define('RECURSOS_PANEL_BSB_CSS', 'recursos_panel_bsb\css');
 define('RECURSOS_PANEL_BSB_PLUGINS', 'recursos_panel_bsb\plugins');
+

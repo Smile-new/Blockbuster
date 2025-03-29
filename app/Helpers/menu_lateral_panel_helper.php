@@ -51,8 +51,6 @@ function configurar_menu_panel($tarea_actual = '', $rol_actual = 0)
             $menu_opcion['submenu'] = array();
             $menu['generos'] = $menu_opcion;
     
-            
-    
             // Streaming
             $menu_opcion = array();
             $menu_opcion['is_active'] = ($tarea_actual == TAREA_STREAMING);
@@ -97,8 +95,8 @@ function configurar_menu_panel($tarea_actual = '', $rol_actual = 0)
     
             // Clientes (usuarios)
             $menu_opcion = array();
-            $menu_opcion['is_active'] = ($tarea_actual == TAREA_USUARIOS);
-            $menu_opcion['href'] = route_to("usuarios");
+            $menu_opcion['is_active'] = ($tarea_actual == TAREA_CLIENTES);
+            $menu_opcion['href'] = route_to("clientes");
             $menu_opcion['text'] = 'Clientes';
             $menu_opcion['icon'] = 'fa fa-user-check';
             $menu_opcion['submenu'] = array();
@@ -123,11 +121,9 @@ function configurar_menu_panel($tarea_actual = '', $rol_actual = 0)
             $menu['alquileres'] = $menu_opcion;
         }
     
-        
         return $menu;
     }
     
-
  //end configurar_menu_panel//end configurar_menu_panel
 
 function crear_menu_panel($tarea_actual = '', $rol_actual = 0)

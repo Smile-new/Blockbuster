@@ -73,37 +73,47 @@ class Usuario_nuevo extends BaseController
         }
     }// end index
 
-    public function registrar(){
-        //d('registrando');
-        helper('message');
-        //Arreglo temporal
-        $usuario = array();
-        //$usuario["atributoDB"] = $this->request->getPost("nameFileHTML");
+    public function registrar()
+{
+    helper(['message', 'filesystem']);
 
-        $usuario["estatus_usuario"] = ESTATUS_HABILITADO;
-        $usuario["nombre_usuario"] = $this->request->getPost("nombre");
-        $usuario["ap_usuario"] = $this->request->getPost("apellido_paterno");
-        $usuario["am_usuario"] = $this->request->getPost("apellido_materno");
-        $usuario["sexo_usuario"] = $this->request->getPost("sexo");
-        $usuario["correo_usuario"] = $this->request->getPost("email");
-        $usuario["password_usuario"] = hash("sha256", $this->request->getPost("password"));
-        $usuario["imagen_usuario"] = $this->request->getPost("foto_perfil");
-        $usuario["id_rol"] = $this->request->getPost("rol");
+    $usuario = [];
 
-        //dd($usuario);
+    $usuario["estatus_usuario"] = ESTATUS_HABILITADO;
+    $usuario["nombre_usuario"] = $this->request->getPost("nombre");
+    $usuario["ap_usuario"] = $this->request->getPost("apellido_paterno");
+    $usuario["am_usuario"] = $this->request->getPost("apellido_materno");
+    $usuario["sexo_usuario"] = $this->request->getPost("sexo");
+    $usuario["correo_usuario"] = $this->request->getPost("email");
+    $usuario["password_usuario"] = hash("sha256", $this->request->getPost("password"));
+    $usuario["id_rol"] = $this->request->getPost("rol");
 
-        $tabla_usuarios = new \App\Models\Tabla_usuario;
+    // === Subida de imagen ===
+    $imagen = $this->request->getFile('foto_perfil');
 
-        if ($tabla_usuarios->create_data($usuario) > 0) {
-            //dd($tabla_usuarios);
-            make_message(SUCCESS_ALERT, 'Se ha registrado el usuario correctamente.', 'Éxito!');
-            return redirect()->to(route_to("usuarios"));
-        }//end if
-        else {
-            make_message(ERROR_ALERT, 'Error al registrar el usuario.', 'Error!');
-            return redirect()->to(route_to("usuario_nuevo"));//$this->index();
-        }
+    if ($imagen && $imagen->isValid() && !$imagen->hasMoved()) {
+        $nuevoNombre = $imagen->getRandomName();
+        $rutaDestino = FCPATH . 'perfiles/'; // Ya apunta a public/perfiles/
+
+        $imagen->move($rutaDestino, $nuevoNombre);
+
+        $usuario["imagen_usuario"] = $nuevoNombre;
+    } else {
+        $usuario["imagen_usuario"] = null; // o pon una imagen por defecto si prefieres
     }
+
+    // === Guardar en la base de datos ===
+    $tabla_usuarios = new \App\Models\Tabla_usuario;
+
+    if ($tabla_usuarios->create_data($usuario) > 0) {
+        make_message(SUCCESS_ALERT, 'Se ha registrado el usuario correctamente.', 'Éxito!');
+        return redirect()->to(route_to("usuarios"));
+    } else {
+        make_message(ERROR_ALERT, 'Error al registrar el usuario.', 'Error!');
+        return redirect()->to(route_to("usuario_nuevo"));
+    }
+}
+
 
 
 }// end Dashboard

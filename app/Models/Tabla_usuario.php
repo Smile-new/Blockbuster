@@ -115,6 +115,10 @@ class Tabla_usuario extends Model{
 
     }
     
-    
+    public function obtener_clientes()
+{
+    return $this->where('id_rol', ROL_CLIENTE['clave'])->findAll();
+}
+
 
 }//end Tabla_usuario

@@ -8,6 +8,7 @@ class Tabla_Planes extends Model
 {
     protected $table            = 'planes';
     protected $primaryKey       = 'id_plan';
+    protected $returnType = "object";
     protected $allowedFields    = [
         'estatus_plan',
         'nombre_plan',

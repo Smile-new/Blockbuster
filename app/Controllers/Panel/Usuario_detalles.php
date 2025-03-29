@@ -87,16 +87,14 @@ class Usuario_detalles extends BaseController
         }
     }// end index
 
-    public function actualizar($id_usuario = 0){
-        //d($id_usuario);
-        helper('message');
-        //Instaciamos el modelo
+    public function actualizar($id_usuario = 0)
+    {
+        helper(['message', 'filesystem']);
+    
         $tabla_usuarios = new \App\Models\Tabla_usuario;
+    
         if ($tabla_usuarios->find($id_usuario) != null) {
-            //dd('proceso de actualizacion');
-            //Arreglo temporal
-            $usuario = array();
-            //$usuario["atributoDB"] = $this->request->getPost("nameFileHTML");
+            $usuario = [];
     
             $usuario["estatus_usuario"] = ESTATUS_HABILITADO;
             $usuario["nombre_usuario"] = $this->request->getPost("nombre");
@@ -104,38 +102,41 @@ class Usuario_detalles extends BaseController
             $usuario["am_usuario"] = $this->request->getPost("apellido_materno");
             $usuario["sexo_usuario"] = $this->request->getPost("sexo");
             $usuario["correo_usuario"] = $this->request->getPost("email");
-            //$usuario["imagen_usuario"] = $this->request->getPost("foto_perfil");
             $usuario["id_rol"] = $this->request->getPost("rol");
-
+    
+            // Manejo de contraseña
             if (!empty($this->request->getPost("password"))) {
                 if ($this->request->getPost("password") == $this->request->getPost("repassword")) {
                     $usuario["password_usuario"] = hash("sha256", $this->request->getPost("password"));
-                }//end if repassword
-                else {
+                } else {
                     make_message(WARNING_ALERT, 'Las contraseñas no coinciden.', 'Error');
                     return $this->index($id_usuario);
-                }//end else
-                
-            }//end if !empty
-            //dd($usuario);
-
-            //update query
+                }
+            }
+    
+            // Manejo de imagen
+            $imagen = $this->request->getFile('foto_perfil');
+            if ($imagen && $imagen->isValid() && !$imagen->hasMoved()) {
+                $nuevoNombre = $imagen->getRandomName();
+                $rutaDestino = FCPATH . 'perfiles/'; // public/perfiles/
+    
+                $imagen->move($rutaDestino, $nuevoNombre);
+                $usuario["imagen_usuario"] = $nuevoNombre;
+            }
+    
+            // Actualizar en BD
             if ($tabla_usuarios->update_data($id_usuario, $usuario)) {
-                make_message(SUCCESS_ALERT, 'Actualizacion éxitosa.', 'Éxito!');
+                make_message(SUCCESS_ALERT, 'Actualización exitosa.', 'Éxito!');
                 return redirect()->to(route_to("usuarios"));
-            }//end if
-            else {
+            } else {
                 make_message(ERROR_ALERT, 'Error al actualizar los datos.', 'Error');
                 return $this->index($id_usuario);
             }
-
-        }//end if
-        else {
-            make_message(ERROR_ALERT, 'El usuario que solicitas actualizar no se ha encontrado.', 'Error');
+    
+        } else {
+            make_message(ERROR_ALERT, 'El usuario que deseas actualizar no existe.', 'Error');
             return $this->index($id_usuario);
-             //return $this->create_view($this->view, $this->load_data($id_usuario));
-        }//end else
-        
-    }//end actualizar
-
+        }
+    }
+    
 }// end Dashboard

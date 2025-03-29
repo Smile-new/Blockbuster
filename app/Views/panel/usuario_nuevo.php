@@ -150,7 +150,13 @@
                             </h3>
                         </div>
                         <!-- form start -->
-                        <?= form_open("registrar_usuario", ["id" => "formulario-nuevo-usuario", "class" => "needs-validation"])?>
+                        <?= form_open("registrar_usuario", [
+    "id" => "formulario-nuevo-usuario",
+    "class" => "needs-validation",
+    "enctype" => "multipart/form-data"
+])?>
+
+
                             <div class="card-body">
                                 <!-- Avatar section -->
                                 <div class="avatar-container text-center">
@@ -158,7 +164,7 @@
                                         alt="imagen_perfil" 
                                         id="previsualizar_imagen"
                                         class="avatar-img rounded-circle" 
-                                        width="150px">
+                                        width="250px">
                                     <label for="foto_perfil" class="avatar-badge">
                                         <i class="fas fa-camera"></i>
                                     </label>
@@ -233,7 +239,8 @@
                                                     $options = [
                                                         '' => 'Seleccionar un rol',
                                                         '745' => 'Administrador',
-                                                        '125' => 'Operador'
+                                                        '125' => 'Operador',
+                                                        '58' => 'cliente'
                                                     ];
 
                                                     $attributes = [
@@ -379,18 +386,21 @@
 <?= $this->section('js')?>
     <script>
         // Script para previsualizar la imagen
-        function previsualizar_imagen() {
-            const file = document.getElementById('foto_perfil').files[0];
-            const preview = document.getElementById('previsualizar_imagen');
-            
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    preview.src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
+
+    function previsualizar_imagen() {
+        const file = document.getElementById('foto_perfil').files[0];
+        const preview = document.getElementById('previsualizar_imagen');
+
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                preview.src = e.target.result;
+            };
+            reader.readAsDataURL(file);
         }
+    }
+
+
         
         // Validación de contraseñas
         document.getElementById('formulario-nuevo-usuario').addEventListener('submit', function(event) {
