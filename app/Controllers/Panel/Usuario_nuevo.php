@@ -24,32 +24,36 @@ class Usuario_nuevo extends BaseController
     }
 
     private function load_data(){
+        //load helper
         helper('message');
-        $data = [];
-    
+        $data = array();
+        //Datos Globales - menulateral, header, foother, session
         $data['nombre_pagnia'] = 'Usuarios';
         $data['titulo_pagina'] = 'Usuarios';
+
         $data["nombre_completo_usuario"] = $this->session->nombre_completo;
         $data["nombre_usuario"] = $this->session->nickname;
         $data["email_usuario"] = $this->session->correo;
-    
+        //RECURSOS_PANEL_IMG_PROFILES_USER
         $data["imagen_usuario"] = ($this->session->perfil == NULL) 
-            ? (($this->session->sexo == MASCULINO) ? 'HOMBRE.jpeg' : 'MUJER.jpeg') 
-            : $this->session->perfil;
-    
-        $breadcrumb = [
-            ['href' => route_to("usuarios"), 'titulo' => 'Usuarios'],
-            ['href' => '#', 'titulo' => 'Usuario nuevo']
-        ];
+                                    ? (($this->session->sexo == MASCULINO) ? 'HOMBRE.jpeg' : 'MUJER.jpeg') 
+                                    : $this->session->perfil;
+
+        $breadcrumb = array(
+            array(
+                'href' => route_to("usuarios"),
+                'titulo' => 'Usuarios',
+            ),
+            array(
+                'href' => '#',
+                'titulo' => 'Usuario nuevo',
+            )
+        );
         $data['breadcrumb_panel'] = breadcrumb_panel($data['titulo_pagina'], $breadcrumb);
-    
-        // ✅ Cargar los roles desde la tabla
-        $modeloRoles = new \App\Models\Tabla_roles(); // Asegúrate de tener este modelo creado
-        $data['roles'] = $modeloRoles->findAll();
-    
+
+        //Queries SQL
         return $data;
-    }
-    
+    }//end load_data
 
     private function create_view($name_view = '', $content = array()){
         $content["menu_lateral"] = crear_menu_panel($this->session->tarea_actual, $this->session->rol_actual);
