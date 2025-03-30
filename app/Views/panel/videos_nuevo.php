@@ -1,22 +1,22 @@
 <?= $this->extend('plantillas/panel_base') ?>
-
 <?= $this->section('content') ?>
+
 <div class="row">
     <div class="col-md-12">
         <h4 class="mb-4">Nuevo Video</h4>
-        <!-- FILTRO POR STREAMING -->
-<form method="get" class="form-inline mb-3">
-    <label for="id_streaming" class="mr-2">Filtrar por título:</label>
-    <select name="id_streaming" id="id_streaming" class="form-control mr-2" onchange="this.form.submit()">
-        <option value="">-- Todos --</option>
-        <?php foreach ($streamings as $item): ?>
-            <option value="<?= $item['id_streaming'] ?>" <?= ($filtro_streaming == $item['id_streaming']) ? 'selected' : '' ?>>
-                <?= esc($item['nombre_streaming']) ?>
-            </option>
-        <?php endforeach ?>
-    </select>
-</form>
 
+        <!-- FILTRO POR STREAMING -->
+        <form method="get" class="form-inline mb-3">
+            <label for="id_streaming" class="mr-2">Filtrar por título:</label>
+            <select name="id_streaming" id="id_streaming" class="form-control mr-2" onchange="this.form.submit()">
+                <option value="">-- Todos --</option>
+                <?php foreach ($streamings as $item): ?>
+                    <option value="<?= $item->id_streaming ?>" <?= ($filtro_streaming == $item->id_streaming) ? 'selected' : '' ?>>
+                        <?= esc($item->nombre_streaming) ?>
+                    </option>
+                <?php endforeach ?>
+            </select>
+        </form>
 
         <?= form_open_multipart(route_to('guardar_video')) ?>
 
@@ -50,11 +50,10 @@
             <select name="id_streaming" class="form-control" required>
                 <option value="">Seleccione un título</option>
                 <?php foreach ($streamings as $item): ?>
-    <option value="<?= $item['id_streaming'] ?>">
-        <?= esc($item['nombre_streaming']) ?>
-    </option>
-<?php endforeach ?>
-
+                    <option value="<?= $item->id_streaming ?>">
+                        <?= esc($item->nombre_streaming) ?>
+                    </option>
+                <?php endforeach ?>
             </select>
         </div>
 
@@ -70,4 +69,5 @@
         <?= form_close() ?>
     </div>
 </div>
+
 <?= $this->endSection() ?>

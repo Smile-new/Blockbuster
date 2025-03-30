@@ -4,98 +4,134 @@
 <!-- RENDER css -->
 <?= $this->section('css')?>
     <style>
-        .profile-card {
-            border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        .card {
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            border: none;
+            overflow: hidden;
         }
-        
-        .profile-header {
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
-            border-radius: 15px 15px 0 0;
+        .card-primary {
+            border-top: 4px solid #4361ee;
+        }
+        .card-header {
+            background: linear-gradient(135deg, #4361ee 0%, #3a0ca3 100%);
+            color: white;
             padding: 20px;
+            border-bottom: none;
         }
-        
-        .profile-img-container {
+        .card-title {
+            font-weight: 600;
+            font-size: 1.5rem;
+            margin-bottom: 0;
+        }
+        .form-control {
+            border-radius: 6px;
+            border: 1px solid #e2e8f0;
+            padding: 10px 15px;
+            transition: all 0.3s ease;
+        }
+        .form-control:focus {
+            border-color: #4361ee;
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.15);
+        }
+        .form-group label {
+            font-weight: 500;
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+        .btn {
+            border-radius: 6px;
+            padding: 10px 20px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        .btn-primary {
+            background-color: #4361ee;
+            border-color: #4361ee;
+        }
+        .btn-primary:hover {
+            background-color: #3a0ca3;
+            border-color: #3a0ca3;
+            transform: translateY(-2px);
+        }
+        .btn-danger {
+            background-color: #ef4444;
+            border-color: #ef4444;
+        }
+        .btn-danger:hover {
+            background-color: #dc2626;
+            border-color: #dc2626;
+            transform: translateY(-2px);
+        }
+        .avatar-container {
             position: relative;
             margin-bottom: 30px;
         }
-        
-        .profile-img {
-            border: 5px solid white;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        .avatar-img {
+            border: 4px solid white;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
-        
-        .profile-img:hover {
-            transform: scale(1.05);
+        .avatar-badge {
+            position: absolute;
+            bottom: 10px;
+            right: calc(50% - 75px);
+            background-color: #4361ee;
+            color: white;
+            border-radius: 50%;
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
         }
-        
-        .form-control:focus {
-            border-color: #4b6cb7;
-            box-shadow: 0 0 0 0.2rem rgba(75, 108, 183, 0.25);
+        .form-check-input {
+            width: 18px;
+            height: 18px;
+            margin-top: 0.15rem;
         }
-        
-        .btn-primary {
-            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
-            border: none;
-            border-radius: 50px;
-            padding: 8px 25px;
-            transition: all 0.3s ease;
+        .form-check-input:checked {
+            background-color: #4361ee;
+            border-color: #4361ee;
         }
-        
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .btn-danger {
-            border-radius: 50px;
-            padding: 8px 25px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-danger:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-        }
-        
-        .form-group label {
-            font-weight: 500;
-            color: #555;
-        }
-        
-        .card-footer {
-            background: transparent;
-            border-top: 1px solid rgba(0,0,0,0.05);
-        }
-        
-        .custom-file-input:focus ~ .custom-file-label {
-            border-color: #4b6cb7;
-            box-shadow: 0 0 0 0.2rem rgba(75, 108, 183, 0.25);
-        }
-        
-        .gender-options {
+        .radio-container {
             display: flex;
             gap: 20px;
         }
-        
-        .gender-option {
-            flex: 1;
-            border: 1px solid #ced4da;
-            border-radius: 5px;
-            padding: 10px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
-        
-        .gender-option.selected {
-            background-color: #4b6cb7;
+        .card-footer {
+            background-color: #f8fafc;
+            border-top: 1px solid #f1f5f9;
+            padding: 20px;
+        }
+        .section-title {
+            font-size: 1.1rem;
+            color: #4a5568;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        .form-section {
+            margin-bottom: 25px;
+        }
+        #foto_perfil {
+            padding: 12px;
+        }
+        #foto_perfil::file-selector-button {
+            background-color: #4361ee;
             color: white;
-            border-color: #4b6cb7;
+            border: none;
+            border-radius: 4px;
+            padding: 8px 16px;
+            margin-right: 15px;
+            cursor: pointer;
         }
-        
-
     </style>
 <?= $this->endSection()?>
 <!-- RENDER css -->
@@ -105,43 +141,42 @@
     <section class="content">
         <div class="container-fluid">
             <div class="row justify-content-center">
-                <!-- left column -->
                 <div class="col-md-10">
-                    <!-- jquery validation -->
-                    <div class="card profile-card">
-                        <div class="card-header profile-header">
-                            <h3 class="card-title text-white"><i class="fas fa-user-edit mr-2"></i>Detalles del Usuario</h3>
+                    <div class="card card-primary">
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <i class="fas fa-user-plus mr-2"></i>
+                                Registrar nuevo usuario
+                            </h3>
                         </div>
                         <!-- form start -->
                         <?= form_open("registrar_usuario", [
-                            "id" => "formulario-nuevo-usuario",
-                            "class" => "needs-validation",
-                            "enctype" => "multipart/form-data"
-                        ])?>
+    "id" => "formulario-nuevo-usuario",
+    "class" => "needs-validation",
+    "enctype" => "multipart/form-data"
+])?>
 
 
                             <div class="card-body">
                                 <!-- Avatar section -->
-                                <!-- <div class="row">
-                                    <div class="avatar-container text-center">
-                                        <img src="<?= base_url(RECURSOS_PANEL_IMG_PROFILES_USER.'hombre.png'); ?>" 
-                                            alt="imagen_perfil" 
-                                            id="previsualizar_imagen"
-                                            class="avatar-img rounded-circle" 
-                                            width="250px">
-                                        <label for="foto_perfil" class="avatar-badge">
-                                            <i class="fas fa-camera"></i>
-                                        </label>
-                                    </div>
-                                </div>  -->
+                                <div class="avatar-container text-center">
+                                    <img src="<?= base_url(RECURSOS_PANEL_IMG_PROFILES_USER.'hombre.png'); ?>" 
+                                        alt="imagen_perfil" 
+                                        id="previsualizar_imagen"
+                                        class="avatar-img rounded-circle" 
+                                        width="250px">
+                                    <label for="foto_perfil" class="avatar-badge">
+                                        <i class="fas fa-camera"></i>
+                                    </label>
+                                </div>
                                 
                                 <!-- Personal information section -->
-                                <div class="bg-light p-3 mb-4 rounded">
-                                    <h5 class="mb-3 text-primary"><i class="fas fa-id-card mr-2"></i>Información Personal</h5>
+                                <div class="form-section">
+                                    <h5 class="section-title"><i class="fas fa-user mr-2"></i>Información personal</h5>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="nombre"><i class="fas fa-user mr-1"></i>Nombre(s)</label>
+                                                <label for="nombre"><i class="fas fa-signature mr-1"></i>Nombre(s)</label>
                                                 <?php
                                                     $atributes = [
                                                                     "type" => "text",
@@ -158,7 +193,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="apellido_paterno"><i class="fas fa-user mr-1"></i>Apellido Paterno</label>
+                                                <label for="apellido_paterno"><i class="fas fa-signature mr-1"></i>Apellido Paterno</label>
                                                 <?php
                                                     $atributes = [
                                                                     "type" => "text",
@@ -175,7 +210,7 @@
                                         </div>
                                         <div class="col-md-4">
                                             <div class="form-group">
-                                                <label for="apellido_materno"><i class="fas fa-user mr-1"></i>Apellido Materno</label>
+                                                <label for="apellido_materno"><i class="fas fa-signature mr-1"></i>Apellido Materno</label>
                                                 <?php
                                                     $atributes = [
                                                                     "type" => "text",
@@ -194,8 +229,8 @@
                                 </div>
                                 
                                 <!-- Account information section -->
-                                <div class="bg-light p-3 mb-4 rounded">
-                                    <h5 class="mb-3 text-primary"><i class="fas fa-cog mr-2"></i>Información de la Cuenta</h5>
+                                <div class="form-section">
+                                    <h5 class="section-title"><i class="fas fa-id-badge mr-2"></i>Información de la cuenta</h5>
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="form-group">
@@ -205,7 +240,7 @@
                                                         '' => 'Seleccionar un rol',
                                                         '745' => 'Administrador',
                                                         '125' => 'Operador',
-                                                        '58' => 'Cliente'
+                                                        '58' => 'cliente'
                                                     ];
 
                                                     $attributes = [
@@ -240,8 +275,8 @@
                                         <div class="col-md-4">
                                             <div class="form-group">
                                                 <label><i class="fas fa-venus-mars mr-1"></i>Sexo</label>
-                                                <div class="gender-options">
-                                                    <div class="gender-option">
+                                                <div class="radio-container mt-2">
+                                                    <div class="radio-option">
                                                         <?php
                                                             $atributes = [
                                                                             "type" => "radio",
@@ -252,9 +287,9 @@
                                                                         ];
                                                             echo form_input($atributes, MASCULINO);
                                                         ?>
-                                                        <label for="sexo_masculino" class="mb-0"><i class="fas fa-male mr-1"></i> Masculino</label>
+                                                        <label for="sexo_masculino" class="mr-3">Masculino</label>
                                                     </div>
-                                                    <div class="gender-option">
+                                                    <div class="radio-option">
                                                         <?php
                                                             $atributes = [
                                                                             "type" => "radio",
@@ -265,7 +300,7 @@
                                                                         ];
                                                             echo form_input($atributes, FEMENINO);
                                                         ?>
-                                                        <label for="sexo_femenino" class="mb-0"><i class="fas fa-female mr-1"></i> Femenino</label>
+                                                        <label for="sexo_femenino">Femenino</label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -274,8 +309,8 @@
                                 </div>
                                 
                                 <!-- Security section -->
-                                <div class="bg-light p-3 mb-4 rounded">
-                                    <h5 class="mb-3 text-primary"><i class="fas fa-lock mr-2"></i>Seguridad</h5>
+                                <div class="form-section">
+                                    <h5 class="section-title"><i class="fas fa-lock mr-2"></i>Seguridad</h5>
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div class="form-group">
@@ -311,35 +346,22 @@
                                                 ?>
                                             </div>
                                         </div>
-                                        
-
-
-                                        
                                     </div>
                                 </div>
                                 
                                 <!-- File upload - hidden but functional -->
-                                <div class="bg-light p-3 rounded">
-                                    <h5 class="mb-3 text-primary"><i class="fas fa-camera mr-2"></i>Foto de Perfil</h5>
-                                    <div class="row">
-                                        <div class="col-md-12">
-                                            <div class="custom-file">
-                                                <?php
-                                                    $atributes = [
-                                                                    "type" => "file",
-                                                                    "class"=> "custom-file-input",
-                                                                    "name"=> "foto_perfil",
-                                                                    "id"=> "foto_perfil",
-                                                                    "onchange"=> "previsualizar_imagen('previsualizar_imagen','foto_perfil')",
-                                                                    "accept"=> ".png, .jpeg, .jpg",
-                                                                ];
-                                                    echo form_input($atributes);
-                                                ?>
-                                                <label class="custom-file-label" for="foto_perfil">Seleccionar archivo</label>
-                                            </div>
-                                            <small class="form-text text-muted">Formatos permitidos: JPG, JPEG, PNG. Tamaño máximo: 2MB</small>
-                                        </div>
-                                    </div>
+                                <div class="d-none">
+                                    <?php
+                                        $atributes = [
+                                                        "type" => "file",
+                                                        "class"=> "form-control",
+                                                        "name"=> "foto_perfil",
+                                                        "id"=> "foto_perfil",
+                                                        "onchange"=> "previsualizar_imagen()",
+                                                        "accept"=> ".png, .jpeg, .jpg",
+                                                    ];
+                                        echo form_input($atributes);
+                                    ?>
                                 </div>
                             </div>
                             <!-- /.card-body -->
