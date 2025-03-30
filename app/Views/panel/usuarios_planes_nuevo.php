@@ -26,14 +26,13 @@
                 <div class="form-group">
                     <label for="id_plan">Plan</label>
                     <select name="id_plan" class="form-control" required>
-    <option value="">Seleccione un plan</option>
-    <?php foreach ($planes as $plan): ?>
-        <option value="<?= esc($plan['id_plan']) ?>">
-            <?= esc($plan['nombre_plan']) ?> - <?= esc($plan['precio_plan']) ?> USD
-        </option>
-    <?php endforeach ?>
-</select>
-
+                        <option value="">Seleccione un plan</option>
+                        <?php foreach ($planes as $plan): ?>
+                            <option value="<?= esc($plan->id_plan) ?>">
+                                <?= esc($plan->nombre_plan) ?> - <?= esc($plan->precio_plan) ?> USD
+                            </option>
+                        <?php endforeach ?>
+                    </select>
                 </div>
 
                 <div class="form-group">
