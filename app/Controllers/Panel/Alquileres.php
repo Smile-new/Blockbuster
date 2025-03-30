@@ -30,7 +30,7 @@ class Alquileres extends BaseController
             'nombre_completo_usuario' => $this->session->nombre_completo ?? '',
             'nombre_usuario' => $this->session->nickname ?? '',
             'email_usuario' => $this->session->correo ?? '',
-            'imagen_usuario' => $this->session->perfil ?? 'hombre.png',
+            'imagen_usuario' => $this->session->perfil ?? (($this->session->sexo ?? '') == MASCULINO ? 'HOMBRE.jpeg' : 'MUJER.jpeg'),
         ];
     
         // Breadcrumb si lo usas en la plantilla base
