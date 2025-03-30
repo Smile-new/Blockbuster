@@ -8,7 +8,6 @@ class Tabla_UsuariosPlanes extends Model
 {
     protected $table            = 'usuarios_planes';
     protected $primaryKey       = 'id_usuario_plan';
-    protected $returnType       = 'object';
     protected $allowedFields    = [
         'fecha_registro_plan',
         'fecha_fin_plan',

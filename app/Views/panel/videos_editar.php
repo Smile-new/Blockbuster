@@ -3,32 +3,32 @@
 
 <h4 class="mb-4">Editar Video</h4>
 
-<?= form_open_multipart(route_to('actualizar_video', $video->id_video)) ?>
+<?= form_open_multipart(route_to('actualizar_video', $video['id_video'])) ?>
 
 <div class="form-group">
     <label for="video">Archivo de Video (dejar vacío para mantener el actual)</label>
     <input type="file" name="video" class="form-control-file" accept="video/*">
-    <small class="form-text text-muted">Archivo actual: <?= esc($video->video) ?></small>
+    <small class="form-text text-muted">Archivo actual: <?= esc($video['video']) ?></small>
 </div>
 
 <div class="form-group">
     <label for="nombre_temporada">Nombre de Temporada</label>
-    <input type="text" name="nombre_temporada" class="form-control" value="<?= esc($video->nombre_temporada) ?>" required>
+    <input type="text" name="nombre_temporada" class="form-control" value="<?= esc($video['nombre_temporada']) ?>" required>
 </div>
 
 <div class="form-group">
     <label for="video_temporada">Número de Temporada</label>
-    <input type="number" name="video_temporada" class="form-control" value="<?= esc($video->video_temporada) ?>" min="1" required>
+    <input type="number" name="video_temporada" class="form-control" value="<?= esc($video['video_temporada']) ?>" min="1" required>
 </div>
 
 <div class="form-group">
     <label for="capitulo_temporada">Número de Capítulo</label>
-    <input type="number" name="capitulo_temporada" class="form-control" value="<?= esc($video->capitulo_temporada) ?>" min="1" required>
+    <input type="number" name="capitulo_temporada" class="form-control" value="<?= esc($video['capitulo_temporada']) ?>" min="1" required>
 </div>
 
 <div class="form-group">
     <label for="descripcion_capitulo_temporada">Descripción del Capítulo</label>
-    <textarea name="descripcion_capitulo_temporada" rows="4" class="form-control" required><?= esc($video->descripcion_capitulo_temporada) ?></textarea>
+    <textarea name="descripcion_capitulo_temporada" rows="4" class="form-control" required><?= esc($video['descripcion_capitulo_temporada']) ?></textarea>
 </div>
 
 <div class="form-group">
@@ -36,8 +36,8 @@
     <select name="id_streaming" class="form-control" required>
         <option value="">Seleccione un título</option>
         <?php foreach ($streamings as $item): ?>
-            <option value="<?= $item->id_streaming ?>" <?= ($video->id_streaming == $item->id_streaming) ? 'selected' : '' ?>>
-                <?= esc($item->nombre_streaming) ?>
+            <option value="<?= $item['id_streaming'] ?>" <?= $video['id_streaming'] == $item['id_streaming'] ? 'selected' : '' ?>>
+                <?= esc($item['nombre_streaming']) ?>
             </option>
         <?php endforeach ?>
     </select>

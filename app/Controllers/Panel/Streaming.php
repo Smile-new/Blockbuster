@@ -135,57 +135,55 @@ class Streaming extends BaseController
     return $this->create_view('panel/streaming_editar', $data);
 }
 
-public function actualizar($id = 0)
-{
-    helper('message');
+    public function actualizar($id = 0)
+    {
+        helper('message');
 
-    $modelo = new Tabla_Streaming();
-    $streaming = $modelo->find($id); // Retorna un objeto (returnType = 'object')
+        $modelo = new Tabla_Streaming();
+        $streaming = $modelo->find($id);
 
-    if (!$streaming) {
-        make_message(ERROR_ALERT, 'Streaming no encontrado.', 'Error');
+        if (!$streaming) {
+            make_message(ERROR_ALERT, 'Streaming no encontrado.', 'Error');
+            return redirect()->to(route_to('streaming'));
+        }
+
+        $caratula = $this->request->getFile('caratula_streaming');
+        $trailer = $this->request->getFile('trailer_streaming');
+
+        $nombreCaratula = $streaming['caratula_streaming'];
+        $nombreTrailer = $streaming['trailer_streaming'];
+
+        if ($caratula->isValid() && !$caratula->hasMoved()) {
+            $nombreCaratula = $caratula->getRandomName();
+            $caratula->move($this->carpetaCaratulas, $nombreCaratula);
+        }
+
+        if ($trailer->isValid() && !$trailer->hasMoved()) {
+            $nombreTrailer = $trailer->getRandomName();
+            $trailer->move($this->carpetaTrailers, $nombreTrailer);
+        }
+
+        $data = [
+            'nombre_streaming' => $this->request->getPost('nombre'),
+            'fecha_lanzamiento_streaming' => $this->request->getPost('fecha_lanzamiento'),
+            'duracion_streaming' => $this->request->getPost('duracion'),
+            'temporadas_streaming' => $this->request->getPost('temporadas'),
+            'caratula_streaming' => $nombreCaratula,
+            'trailer_streaming' => $nombreTrailer,
+            'clasificacion_streaming' => $this->request->getPost('clasificacion'),
+            'sipnosis_streaming' => $this->request->getPost('sipnosis'),
+            'fecha_estreno_streaming' => $this->request->getPost('fecha_estreno'),
+            'id_genero' => $this->request->getPost('id_genero')
+        ];
+
+        if ($modelo->update($id, $data)) {
+            make_message(SUCCESS_ALERT, 'Actualización exitosa.', 'Éxito!');
+        } else {
+            make_message(ERROR_ALERT, 'Error al actualizar.', 'Error');
+        }
+
         return redirect()->to(route_to('streaming'));
     }
-
-    $caratula = $this->request->getFile('caratula_streaming');
-    $trailer = $this->request->getFile('trailer_streaming');
-
-    // Corrección: uso de -> en lugar de []
-    $nombreCaratula = $streaming->caratula_streaming;
-    $nombreTrailer = $streaming->trailer_streaming;
-
-    if ($caratula->isValid() && !$caratula->hasMoved()) {
-        $nombreCaratula = $caratula->getRandomName();
-        $caratula->move($this->carpetaCaratulas, $nombreCaratula);
-    }
-
-    if ($trailer->isValid() && !$trailer->hasMoved()) {
-        $nombreTrailer = $trailer->getRandomName();
-        $trailer->move($this->carpetaTrailers, $nombreTrailer);
-    }
-
-    $data = [
-        'nombre_streaming' => $this->request->getPost('nombre'),
-        'fecha_lanzamiento_streaming' => $this->request->getPost('fecha_lanzamiento'),
-        'duracion_streaming' => $this->request->getPost('duracion'),
-        'temporadas_streaming' => $this->request->getPost('temporadas'),
-        'caratula_streaming' => $nombreCaratula,
-        'trailer_streaming' => $nombreTrailer,
-        'clasificacion_streaming' => $this->request->getPost('clasificacion'),
-        'sipnosis_streaming' => $this->request->getPost('sipnosis'),
-        'fecha_estreno_streaming' => $this->request->getPost('fecha_estreno'),
-        'id_genero' => $this->request->getPost('id_genero')
-    ];
-
-    if ($modelo->update($id, $data)) {
-        make_message(SUCCESS_ALERT, 'Actualización exitosa.', 'Éxito!');
-    } else {
-        make_message(ERROR_ALERT, 'Error al actualizar.', 'Error');
-    }
-
-    return redirect()->to(route_to('streaming'));
-}
-
 
     public function eliminar($id = 0)
     {
