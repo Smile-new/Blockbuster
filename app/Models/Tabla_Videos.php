@@ -8,6 +8,7 @@ class Tabla_Videos extends Model
 {
     protected $table            = 'videos';
     protected $primaryKey       = 'id_video';
+    protected $returnType = "object";
     protected $allowedFields    = [
         'estatus_video',
         'video',
