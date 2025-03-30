@@ -14,9 +14,9 @@
             <select name="id_streaming" id="id_streaming" class="form-control mr-2" onchange="this.form.submit()">
                 <option value="">-- Todos --</option>
                 <?php foreach ($streamings as $stream): ?>
-                    <option value="<?= $stream->id_streaming ?>"
-                        <?= ($filtro_streaming == $stream->id_streaming) ? 'selected' : '' ?>>
-                        <?= esc($stream->nombre_streaming) ?>
+                    <option value="<?= $stream['id_streaming'] ?>"
+                        <?= ($filtro_streaming == $stream['id_streaming']) ? 'selected' : '' ?>>
+                        <?= esc($stream['nombre_streaming']) ?>
                     </option>
                 <?php endforeach ?>
             </select>
@@ -42,18 +42,18 @@
                             <td><?= $i++ ?></td>
                             <td>
                                 <video width="150" height="90" controls>
-                                    <source src="<?= base_url('videos/' . $video->video) ?>" type="video/mp4">
+                                    <source src="<?= base_url('videos/' . $video['video']) ?>" type="video/mp4">
                                     Tu navegador no soporta la reproducción de video.
                                 </video>
                             </td>
-                            <td><?= esc($video->nombre_temporada) ?></td>
-                            <td><?= esc($video->video_temporada) ?></td>
-                            <td><?= esc($video->capitulo_temporada) ?></td>
+                            <td><?= esc($video['nombre_temporada']) ?></td>
+                            <td><?= esc($video['video_temporada']) ?></td>
+                            <td><?= esc($video['capitulo_temporada']) ?></td>
                             <td style="max-width: 300px; overflow-wrap: break-word;">
-                                <?= esc($video->descripcion_capitulo_temporada) ?>
+                                <?= esc($video['descripcion_capitulo_temporada']) ?>
                             </td>
                             <td>
-                                <?php if ($video->estatus_video == 1): ?>
+                                <?php if ($video['estatus_video'] == 1): ?>
                                     <span class="badge badge-success">Activo</span>
                                 <?php else: ?>
                                     <span class="badge badge-danger">Inactivo</span>
@@ -61,15 +61,15 @@
                             </td>
                             <td class="text-center">
                                 <!-- Estatus -->
-                                <?php if ($video->estatus_video == 1): ?>
-                                    <a href="<?= route_to('estatus_video', $video->id_video, -1) ?>"
+                                <?php if ($video['estatus_video'] == 1): ?>
+                                    <a href="<?= route_to('estatus_video', $video['id_video'], -1) ?>"
                                        class="btn btn-sm btn-warning"
                                        title="Desactivar"
                                        onclick="return confirm('¿Desactivar este video?')">
                                         <i class="fas fa-toggle-off"></i>
                                     </a>
                                 <?php else: ?>
-                                    <a href="<?= route_to('estatus_video', $video->id_video, 1) ?>"
+                                    <a href="<?= route_to('estatus_video', $video['id_video'], 1) ?>"
                                        class="btn btn-sm btn-success"
                                        title="Activar"
                                        onclick="return confirm('¿Activar este video?')">
@@ -78,14 +78,14 @@
                                 <?php endif ?>
 
                                 <!-- Editar -->
-                                <a href="<?= route_to('editar_video', $video->id_video) ?>"
+                                <a href="<?= route_to('editar_video', $video['id_video']) ?>"
                                    class="btn btn-sm btn-info"
                                    title="Editar">
                                     <i class="fas fa-edit"></i>
                                 </a>
 
                                 <!-- Eliminar -->
-                                <a href="<?= route_to('eliminar_video', $video->id_video) ?>"
+                                <a href="<?= route_to('eliminar_video', $video['id_video']) ?>"
                                    class="btn btn-sm btn-danger"
                                    title="Eliminar"
                                    onclick="return confirm('¿Eliminar este video?')">

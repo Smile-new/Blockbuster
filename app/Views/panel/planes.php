@@ -26,7 +26,6 @@
                         <tr>
                             <td><?= $i++ ?></td>
                             <td><?= esc($plan->nombre_plan) ?></td>
-                            <td>$<?= number_format($plan->precio_plan, 2) ?></td>
                             <td><?= esc($plan->cantidad_limite_plan) ?></td>
                             <td><?= esc($plan->tipo_plan) ?></td>
                             <td>
