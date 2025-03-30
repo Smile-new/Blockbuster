@@ -84,15 +84,19 @@ class Videos extends BaseController
 }
 
 
-    public function nuevo()
-    {
-        $data = $this->load_data();
-        $data['titulo_pagina'] = 'Nuevo Video';
-        $modeloStreaming = new Tabla_Streaming();
-        $data['streamings'] = $modeloStreaming->findAll();
+public function nuevo()
+{
+    $data = $this->load_data();
+    $data['titulo_pagina'] = 'Nuevo Video';
 
-        return $this->create_view('panel/videos_nuevo', $data);
-    }
+    $modeloStreaming = new \App\Models\Tabla_Streaming();
+    $data['streamings'] = $modeloStreaming->findAll();
+
+    // Asegurar que la variable esté siempre definida para evitar errores
+    $data['filtro_streaming'] = $this->request->getGet('id_streaming') ?? '';
+
+    return $this->create_view('panel/videos_nuevo', $data);
+}
 
     public function guardar()
     {
@@ -147,23 +151,23 @@ class Videos extends BaseController
     public function actualizar($id = 0)
     {
         helper('message');
-
+    
         $modelo = new Tabla_Videos();
         $video = $modelo->find($id);
-
+    
         if (!$video) {
             make_message(ERROR_ALERT, 'Video no encontrado.', 'Error');
             return redirect()->to(route_to('videos'));
         }
-
+    
         $archivoVideo = $this->request->getFile('video');
-        $nombreArchivo = $video['video'];
-
+        $nombreArchivo = $video->video; // ✅ Corrección aquí
+    
         if ($archivoVideo->isValid() && !$archivoVideo->hasMoved()) {
             $nombreArchivo = $archivoVideo->getRandomName();
             $archivoVideo->move($this->carpetaVideos, $nombreArchivo);
         }
-
+    
         $data = [
             'video' => $nombreArchivo,
             'nombre_temporada' => $this->request->getPost('nombre_temporada'),
@@ -172,15 +176,16 @@ class Videos extends BaseController
             'descripcion_capitulo_temporada' => $this->request->getPost('descripcion_capitulo_temporada'),
             'id_streaming' => $this->request->getPost('id_streaming'),
         ];
-
+    
         if ($modelo->update($id, $data)) {
             make_message(SUCCESS_ALERT, 'Actualización exitosa.', 'Éxito!');
         } else {
             make_message(ERROR_ALERT, 'Error al actualizar el video.', 'Error');
         }
-
+    
         return redirect()->to(route_to('videos'));
     }
+    
 
     public function eliminar($id = 0)
     {
